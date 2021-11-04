@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: payment-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: root
+    tomcat:
+      default-auto-commit: true
+      initial-size: 20
+      max-active: 50
+      max-idle: 15
+      max-wait: 20000
+    url: "jdbc:mysql://localhost:3306/payment-service"
+    username: root
+    jpa:
+      database-platform: org.hibernate.dialect.MySQL5Dialect
+      hibernate:
+        ddl-auto: update
+      properties:
+        hibernate:
+          format_sql: true
+      show-sql: true
+server:
+  port: 4004
+spring.cloud.stream:
+  function:
+    definition: paymentProcessor
+  bindings:
+    paymentProcessor-in-0:
+      destination: order-event
+    paymentProcessor-out-0:
+      destination: payment-event
